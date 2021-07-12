@@ -16,7 +16,7 @@ class BotServer:
 
     def __init__(self):
         # define socket params
-        self.HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+        self.HOST = '127.0.0.1'
         self.PORT = 65432
         self.connected = False
 
@@ -27,7 +27,22 @@ class BotServer:
 
     # parses all data from
     def parse_data(self, data):
-        pass
+        if data == b'stop':
+            self.robot.stop()
+        elif data == b'forward':
+            self.robot.forward()
+        elif data == b'backward':
+            self.robot.backward()
+        elif data == b'left':
+            self.robot.left()
+        elif data == b'right':
+            self.robot.right()
+        elif data == b'armx+':
+            self.arm.move_arm_relative_speed(10)
+        elif data == b'armx-':
+            self.arm.move_arm_relative_speed(-10)
+        elif data == b'army+':
+            self.arm.executeMove()
 
     # opens socket and listens to Dmitriy's instruction to move robot
     def server(self):
@@ -51,7 +66,7 @@ class BotServer:
                     # todo checksum
                     client_stream.sendall(data)
 
-                    # parse data
+                    # parse data (incoming as binary)
                     self.parse_data(data)
 
                 # closing down sequence
