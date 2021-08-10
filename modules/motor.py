@@ -11,7 +11,7 @@ write_cmd() = sends command to server
 """
 
 from time import sleep
-from comms import Comms
+from .comms import Comms
 
 class Motor(Comms):
     def __init__(self):

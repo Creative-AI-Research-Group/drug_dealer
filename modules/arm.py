@@ -17,8 +17,9 @@ from math import atan2, sqrt, cos, sin, acos, pi
 import time
 
 # Import LSS library
-import lss
-import lss_const as lssc
+import modules.lss_core as lss
+import modules.lss_const as lssc
+
 
 class Arm:
     def __init__(self):
@@ -45,6 +46,7 @@ class Arm:
         self.sleep_position_abs = [0, -900, 900, 0, 0]  # absolute arm position for hold
         self.wait_ready_abs = [0, -900, 400, 600, 0]  # waits
         self.draw_position_abs = [0, -90, 60, 840, 0]
+        self.reach_out = [0, 0, 0, 0, 0]  # special for Dmitriy drug dealer bot
 
         # Set standard positions - RELATIVE
         self.open_pen_rel = [0, 0, 0, 0, -140]  # opens claw to receive pen
@@ -182,6 +184,10 @@ class Arm:
 
         for i, joint in enumerate(self.lss_list):
             joint.moveSpeed(self.draw_position_abs[i], 30)
+
+    def arm_reach_out(self):
+        for i, joint in enumerate(self.lss_list):
+            joint.moveSpeed(self.reach_out[i], 30)
 
     # opens claw for pen
     def open_claw(self):

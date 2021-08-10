@@ -2,7 +2,7 @@
 It translates all the basic commands into motor-class based code.
 """
 
-from motor import Motor
+from .motor import Motor
 from time import sleep
 
 class Robot:
