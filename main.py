@@ -11,6 +11,7 @@ from Dmitriy's C++ CV script (localhost)"""
 # import python modules
 import sys
 import serial
+from time import sleep
 
 # import project modules
 from modules.rerobot import Robot
@@ -27,11 +28,11 @@ bot_backward = 2
 bot_left_turn = 3
 bot_right_turn = 4
 
-arm_open_claw = 11
-arm_close_claw = 12
+arm_open_claw = 5
+arm_close_claw = 6
 
-arm_waiting_pos = 21
-arm_get_pos = 22
+arm_waiting_pos = 7
+arm_get_pos = 8
 
 class Matlab:
     def __init__(self):
@@ -63,7 +64,7 @@ class Matlab:
 
         # instantiate and own robot and LSS objects
         self.robot = Robot()
-        self.robot.nudge()
+        self.robot.rotate(20)
         if LOGGING:
             print(f'Robot ready')
 
@@ -75,14 +76,24 @@ class Matlab:
     # listen to port
     # read from server buffer
     def read(self):
-        while self.ser.isOpen():
-            # Read incoming SIP
-            incoming = self.ser.read(255)
-            data = int(incoming, 16)
-            if LOGGING:
-                print(f'READING = {incoming} = {data}')
-            self.parse_data(data)
-            self.ser.flushInput()
+        if LOGGING:
+            print('ready to read')
+
+        if DD_HARDWARE:
+            while self.ser.isOpen():
+                # Read incoming SIP
+                incoming = self.ser.read(255)
+                data = int(incoming, 16)
+                if LOGGING:
+                    print(f'READING = {incoming} = {data}')
+                self.parse_data(data)
+                self.ser.flushInput()
+
+        else:
+            for n in range(8):
+                self.parse_data(n+1)
+                sleep(2)
+                self.parse_data(99)
 
         self.terminate()
 
@@ -95,9 +106,9 @@ class Matlab:
         elif data == bot_backward:
             self.robot.backward()
         elif data == bot_left_turn:
-            self.robot.left()
+            self.robot.rotate()
         elif data == bot_right_turn:
-            self.robot.right()
+            self.robot.rotate(-10)
 
         elif data == arm_open_claw:
             self.arm.open_claw()

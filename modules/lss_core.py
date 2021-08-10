@@ -37,7 +37,7 @@ def genericWrite(id, cmd, param = None, mod = None, value = None, mod2 = None, v
             LSS.bus.write((lssc.LSS_CommandStart + str(id) + cmd + str(param) + lssc.LSS_CommandEnd).encode())
     else:
         if mod2 is None:
-            LSS.bus.write((lssc.LSS_CommandStart + str(id) + cmd + str(param) + mod + str(value) + lss_const.LSS_CommandEnd).encode())
+            LSS.bus.write((lssc.LSS_CommandStart + str(id) + cmd + str(param) + mod + str(value) + lssc.LSS_CommandEnd).encode())
         else:
             LSS.bus.write((lssc.LSS_CommandStart + str(id) + cmd + str(param) + mod + str(value) + mod2 + str(val2) + lssc.LSS_CommandEnd).encode())
     return True

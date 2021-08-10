@@ -103,6 +103,7 @@ class Comms:
 
     # writes to server
     def write(self, msg):
+        print(msg)
         msg_hx = bytearray(msg)
         print(f'sending hex message: {msg_hx} to {self.ser.port}')
         self.ser.write(msg_hx)

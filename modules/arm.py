@@ -32,7 +32,7 @@ class Arm:
         elif platform.system() == 'Linux':
             CST_LSS_Port = "/dev/ttyUSB0"
         else:
-            CST_LSS_Port = "/dev/cu.usbserial-AG4UPOC0" # Mac
+            CST_LSS_Port = "/dev/cu.usbserial-AE4O4BY3" # Mac
 
         CST_LSS_Baud = lssc.LSS_DefaultBaud
         self.CST_ANGLE_MIN = -90
