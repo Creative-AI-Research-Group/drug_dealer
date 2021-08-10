@@ -9,8 +9,8 @@
 from Dmitriy's C++ CV script (localhost)"""
 
 import socket
-from ReRoROS.rerobot import Robot
-from lynxmotion_LSS_drawing_arm.arm import Arm
+from modules.rerobot import Robot
+from modules.arm import Arm
 
 class BotServer:
 
