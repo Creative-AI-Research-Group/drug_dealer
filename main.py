@@ -139,9 +139,9 @@ class Matlab:
         elif data == arm_get_pos:
             self.arm.arm_reach_out()
 
-        msg_hx = bytearray('RX')
-        print(f'sending hex message: {msg_hx} to {self.ser.port}')
-        self.ser.write(msg_hx)
+        # msg_hx = bytearray('RX')
+        # print(f'sending hex message: {msg_hx} to {self.ser.port}')
+        # self.ser.write(msg_hx)
 
     def terminate(self):
         self.robot.terminate()
