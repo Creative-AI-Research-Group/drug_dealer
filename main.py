@@ -108,7 +108,7 @@ class Matlab:
             for n in range(demo):
                 self.parse_data(n+1)
                 sleep(2)
-                self.parse_data(99)
+                self.parse_data(9)
 
         self.terminate()
 
