@@ -117,7 +117,7 @@ class Matlab:
         if data == bot_stop:
             self.robot.stop()
         elif data == bot_forward:
-            self.robot.forward()
+            self.robot.forward(100)
         elif data == bot_backward:
             self.robot.backward()
         elif data == bot_left_turn:
