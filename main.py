@@ -19,7 +19,7 @@ from modules.arm import Arm
 
 # hardware abd logging
 LOGGING = True
-DD_HARDWARE = False
+DD_HARDWARE = True
 ARM = False
 
 # consts
