@@ -38,17 +38,19 @@ arm_get_pos = 8
 class Matlab:
     def __init__(self):
         if DD_HARDWARE:
-            port_name = input('what is the port of your CV hardware? e.g. ttyUSB1')
+            # port_name = input('what is the port of your CV hardware? e.g. ttyUSB1')
 
-            if sys.platform.startswith('win'):
-                port = port_name
-            elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-                # this excludes your current terminal "/dev/tty"
-                port = '/dev/' + port_name
-            elif sys.platform.startswith('darwin'):
-                port = '/dev/' + port_name
-            else:
-                raise EnvironmentError('Unsupported platform')
+            # if sys.platform.startswith('win'):
+            #     port = port_name
+            # elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+            #     # this excludes your current terminal "/dev/tty"
+            #     port = '/dev/' + port_name
+            # elif sys.platform.startswith('darwin'):
+            #     port = '/dev/' + port_name
+            # else:
+            #     raise EnvironmentError('Unsupported platform')
+
+            port = '/dev/ttyUSB2'
 
             if LOGGING:
                 print(f'initialise connection to host\n'
