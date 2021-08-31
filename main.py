@@ -23,7 +23,7 @@ DD_HARDWARE = True
 ARM = True
 
 # consts
-bot_stop = b'\x09' # 99
+bot_stop = b'\x09' # 9 not 99
 bot_forward = b'\x01' # 1
 bot_backward = b'\x02' # 2
 bot_left_turn = b'\x03' # 3
@@ -114,10 +114,13 @@ class Matlab:
 
     # parses all data from
     def parse_data(self, data):
+        print(f'parsing {data}')
+
         if data == bot_stop:
             self.robot.stop()
         elif data == bot_forward:
-            self.robot.forward(100)
+            # self.robot.forward(100)
+            self.robot.step_forward()
         elif data == bot_backward:
             self.robot.backward()
         elif data == bot_left_turn:
