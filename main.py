@@ -87,6 +87,10 @@ class Matlab:
             while self.ser.isOpen():
                 # Read incoming SIP
                 incoming = self.ser.read(255)
+
+                if incoming == '':
+                    data = 0
+
                 data = int(incoming, 16)
                 if LOGGING:
                     print(f'READING = {incoming} = {data}')
