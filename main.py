@@ -23,7 +23,7 @@ DD_HARDWARE = True
 ARM = True
 
 # consts
-bot_stop = 99
+bot_stop = b'\x63' # 99
 bot_forward = b'\x01' # 1
 bot_backward = 2
 bot_left_turn = 3
