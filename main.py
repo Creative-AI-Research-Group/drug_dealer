@@ -20,6 +20,7 @@ from modules.arm import Arm
 # hardware abd logging
 LOGGING = True
 DD_HARDWARE = False
+ARM = False
 
 # consts
 bot_stop = 99
@@ -68,10 +69,11 @@ class Matlab:
         if LOGGING:
             print(f'Robot ready')
 
-        self.arm = Arm()
-        self.arm.wait_ready()
-        if LOGGING:
-            print(f'arm ready')
+        if ARM:
+            self.arm = Arm()
+            self.arm.wait_ready()
+            if LOGGING:
+                print(f'arm ready')
 
     # listen to port
     # read from server buffer
@@ -90,7 +92,12 @@ class Matlab:
                 self.ser.flushInput()
 
         else:
-            for n in range(8):
+            if ARM:
+                demo = 8
+            else:
+                demo = 4
+
+            for n in range(demo):
                 self.parse_data(n+1)
                 sleep(2)
                 self.parse_data(99)
@@ -122,7 +129,9 @@ class Matlab:
 
     def terminate(self):
         self.robot.terminate()
-        self.arm.terminate()
+
+        if ARM:
+            self.arm.terminate()
 
 if __name__ == '__main__':
     dd_bot = Matlab()
