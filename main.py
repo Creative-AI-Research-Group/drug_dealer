@@ -19,8 +19,8 @@ from modules.arm import Arm
 
 # hardware abd logging
 LOGGING = True
-DD_HARDWARE = True
-ARM = True
+DD_HARDWARE = False
+ARM = False
 
 # consts
 bot_stop = b'\x09' # 9 not 99
@@ -152,6 +152,10 @@ class Matlab:
         elif data == arm_get_pos:
             self.arm.arm_reach_out()
 
+        if DD_HARDWARE:
+            self.send_rx()
+
+    def send_rx(self):
         msg_hx = hex(999)
         print(f'sending hex message: {msg_hx} to {self.serDD.port}')
         self.serDD.write(msg_hx)
