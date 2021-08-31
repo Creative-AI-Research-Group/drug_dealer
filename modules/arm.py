@@ -30,7 +30,7 @@ class Arm:
         if platform.system() == 'Windows':
             CST_LSS_Port = "COM3"
         elif platform.system() == 'Linux':
-            CST_LSS_Port = "/dev/ttyUSB0"
+            CST_LSS_Port = "/dev/ttyUSB1"
         else:
             CST_LSS_Port = "/dev/cu.usbserial-AE4O4BY3" # Mac
 
