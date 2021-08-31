@@ -88,7 +88,7 @@ class Matlab:
                 # Read incoming SIP
                 incoming = self.ser.read(255)
 
-                if incoming == '':
+                if incoming == b'':
                     print('waiting for data')
 
                 else:
