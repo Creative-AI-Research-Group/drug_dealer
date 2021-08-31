@@ -24,7 +24,7 @@ ARM = True
 
 # consts
 bot_stop = 99
-bot_forward = 1
+bot_forward = b'\x01' # 1
 bot_backward = 2
 bot_left_turn = 3
 bot_right_turn = 4
@@ -92,7 +92,7 @@ class Matlab:
                     print('waiting for data')
 
                 else:
-                    data = int(incoming, 16)
+                    data = incoming # int(incoming, 16)
                     if LOGGING:
                         print(f'READING = {incoming} = {data}')
                     self.parse_data(data)
