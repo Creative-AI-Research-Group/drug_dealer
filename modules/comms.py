@@ -79,8 +79,7 @@ class Comms:
                  'ANALOGUE': 0}
 
     def __init__(self):
-        print(f'initialise connection to host\n'
-              f'opens up the serial port as an object called "ser"{id}')
+
 
         if sys.platform.startswith('win'):
             port = 'COM1'
@@ -91,6 +90,9 @@ class Comms:
             port = '/dev/cu.usbserial-FT5ADV3R'
         else:
             raise EnvironmentError('Unsupported platform')
+
+        print(f'initialise connection to host\n'
+              f'opens up the serial port as an object called "ser"{port}')
 
         self.ser = serial.Serial(port=port,
             baudrate=9600,

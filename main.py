@@ -56,14 +56,14 @@ class Matlab:
                 print(f'initialise connection to host\n'
                       f'opens up the serial port as an object called "ser"{port}')
 
-            self.ser = serial.Serial(port=port,
+            self.serDD = serial.Serial(port=port,
                                      baudrate=9600,
                                      parity=serial.PARITY_NONE,
                                      stopbits=serial.STOPBITS_ONE,
                                      bytesize=serial.EIGHTBITS,
                                      timeout=1
                                      )
-            self.ser.isOpen()
+            self.serDD.isOpen()
 
         # instantiate and own robot and LSS objects
         self.robot = Robot()
@@ -84,9 +84,9 @@ class Matlab:
             print('ready to read')
 
         if DD_HARDWARE:
-            while self.ser.isOpen():
+            while self.serDD.isOpen():
                 # Read incoming SIP
-                incoming = self.ser.read(255)
+                incoming = self.serDD.read(255)
 
                 if incoming == b'':
                     print('waiting for data')
@@ -97,18 +97,29 @@ class Matlab:
                         print(f'READING = {incoming} = {data}')
                     self.parse_data(data)
 
-                self.ser.flushInput()
+                self.serDD.flushInput()
 
-        # else:
-        #     if ARM:
-        #         demo = 8
-        #     else:
-        #         demo = 4
-        #
-        #     for n in range(demo):
-        #         self.parse_data(n+1)
-        #         sleep(2)
-        #         self.parse_data(9)
+        else:
+            if ARM:
+                demo_list = [b'\x01',
+                             b'\x02',
+                             b'\x03',
+                             b'\x04',
+                             b'\x05',
+                             b'\x06',
+                             b'\x07',
+                             b'\x08']
+            else:
+                demo_list = [b'\x01',
+                             b'\x02',
+                             b'\x03',
+                             b'\x04']
+
+            demo_len = len(demo_list)
+            for n in range(demo_len):
+                self.parse_data(demo_list[n])
+                sleep(2)
+                self.parse_data(9)
 
         self.terminate()
 
@@ -118,14 +129,16 @@ class Matlab:
 
         if data == bot_stop:
             self.robot.stop()
+
         elif data == bot_forward:
-            # self.robot.forward(100)
-            self.robot.head(45)
-            print('got to here - turning')
+            self.robot.move(50)
+
         elif data == bot_backward:
             self.robot.backward()
+
         elif data == bot_left_turn:
             self.robot.rotate()
+
         elif data == bot_right_turn:
             self.robot.rotate(-10)
 
@@ -139,9 +152,9 @@ class Matlab:
         elif data == arm_get_pos:
             self.arm.arm_reach_out()
 
-        # msg_hx = bytearray('RX')
-        # print(f'sending hex message: {msg_hx} to {self.ser.port}')
-        # self.ser.write(msg_hx)
+        msg_hx = hex(999)
+        print(f'sending hex message: {msg_hx} to {self.serDD.port}')
+        self.serDD.write(msg_hx)
 
     def terminate(self):
         self.robot.terminate()
