@@ -25,15 +25,15 @@ ARM = True
 # consts
 bot_stop = b'\x63' # 99
 bot_forward = b'\x01' # 1
-bot_backward = 2
-bot_left_turn = 3
-bot_right_turn = 4
+bot_backward = b'\x02' # 2
+bot_left_turn = b'\x03' # 3
+bot_right_turn = b'\x04' # 4
 
-arm_open_claw = 5
-arm_close_claw = 6
+arm_open_claw = b'\x05' # 5
+arm_close_claw = b'\x06' # 6
 
-arm_waiting_pos = 7
-arm_get_pos = 8
+arm_waiting_pos = b'\x07' # 7
+arm_get_pos = b'\x08' # 8
 
 class Matlab:
     def __init__(self):
