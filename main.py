@@ -50,13 +50,13 @@ class Matlab:
             # else:
             #     raise EnvironmentError('Unsupported platform')
 
-            port = '/dev/ttyUSB2'
+            self.port = '/dev/ttyUSB2'
 
             if LOGGING:
                 print(f'initialise connection to host\n'
-                      f'opens up the serial port as an object called "ser"{port}')
+                      f'opens up the serial port as an object called "ser"{self.port}')
 
-            self.serDD = serial.Serial(port=port,
+            self.serDD = serial.Serial(port=self.port,
                                      baudrate=9600,
                                      parity=serial.PARITY_NONE,
                                      stopbits=serial.STOPBITS_ONE,
@@ -94,34 +94,37 @@ class Matlab:
                 else:
                     data = incoming # int(incoming, 16)
                     if LOGGING:
-                        print(f'READING = {incoming} = {data}')
+                        print(f'READING = {incoming} from {self.port}')
                     self.parse_data(data)
 
                 self.serDD.flushInput()
 
         else:
-            if ARM:
-                demo_list = [b'\x01',
-                             b'\x02',
-                             b'\x03',
-                             b'\x04',
-                             b'\x05',
-                             b'\x06',
-                             b'\x07',
-                             b'\x08']
-            else:
-                demo_list = [b'\x01',
-                             b'\x02',
-                             b'\x03',
-                             b'\x04']
-
-            demo_len = len(demo_list)
-            for n in range(demo_len):
-                self.parse_data(demo_list[n])
-                sleep(2)
-                self.parse_data(9)
+            self.demo()
 
         self.terminate()
+
+    def demo(self):
+        if ARM:
+            demo_list = [b'\x01',
+                         b'\x02',
+                         b'\x03',
+                         b'\x04',
+                         b'\x05',
+                         b'\x06',
+                         b'\x07',
+                         b'\x08']
+        else:
+            demo_list = [b'\x01',
+                         b'\x02',
+                         b'\x03',
+                         b'\x04']
+
+        demo_len = len(demo_list)
+        for n in range(demo_len):
+            self.parse_data(demo_list[n])
+            sleep(2)
+            self.parse_data(9)
 
     # parses all data from
     def parse_data(self, data):
@@ -168,4 +171,5 @@ class Matlab:
 
 if __name__ == '__main__':
     dd_bot = Matlab()
-    dd_bot.read()
+    dd_bot.demo()
+    #dd_bot.read()
