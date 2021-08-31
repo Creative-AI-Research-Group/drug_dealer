@@ -19,7 +19,7 @@ from modules.arm import Arm
 
 # hardware abd logging
 LOGGING = True
-DD_HARDWARE = False
+DD_HARDWARE = True
 ARM = True
 
 # consts
@@ -99,16 +99,16 @@ class Matlab:
 
                 self.ser.flushInput()
 
-        else:
-            if ARM:
-                demo = 8
-            else:
-                demo = 4
-
-            for n in range(demo):
-                self.parse_data(n+1)
-                sleep(2)
-                self.parse_data(9)
+        # else:
+        #     if ARM:
+        #         demo = 8
+        #     else:
+        #         demo = 4
+        #
+        #     for n in range(demo):
+        #         self.parse_data(n+1)
+        #         sleep(2)
+        #         self.parse_data(9)
 
         self.terminate()
 
@@ -120,7 +120,8 @@ class Matlab:
             self.robot.stop()
         elif data == bot_forward:
             # self.robot.forward(100)
-            self.robot.step_forward()
+            self.robot.head(45)
+            print('got to here - turning')
         elif data == bot_backward:
             self.robot.backward()
         elif data == bot_left_turn:
@@ -137,6 +138,10 @@ class Matlab:
             self.arm.wait_ready()
         elif data == arm_get_pos:
             self.arm.arm_reach_out()
+
+        msg_hx = bytearray('RX')
+        print(f'sending hex message: {msg_hx} to {self.ser.port}')
+        self.ser.write(msg_hx)
 
     def terminate(self):
         self.robot.terminate()
