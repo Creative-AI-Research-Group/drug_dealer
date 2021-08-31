@@ -20,7 +20,7 @@ from modules.arm import Arm
 # hardware abd logging
 LOGGING = True
 DD_HARDWARE = True
-ARM = False
+ARM = True
 
 # consts
 bot_stop = 99
