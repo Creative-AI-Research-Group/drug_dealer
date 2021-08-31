@@ -89,12 +89,14 @@ class Matlab:
                 incoming = self.ser.read(255)
 
                 if incoming == '':
-                    data = 0
+                    print('waiting for data')
 
-                data = int(incoming, 16)
-                if LOGGING:
-                    print(f'READING = {incoming} = {data}')
-                self.parse_data(data)
+                else:
+                    data = int(incoming, 16)
+                    if LOGGING:
+                        print(f'READING = {incoming} = {data}')
+                    self.parse_data(data)
+
                 self.ser.flushInput()
 
         else:
