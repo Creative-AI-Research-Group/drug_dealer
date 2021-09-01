@@ -123,16 +123,16 @@ class Matlab:
             self.robot.stop()
 
         elif data == bot_forward:
-            self.robot.move(50)
+            self.robot.nudge(10)
 
         elif data == bot_backward:
-            self.robot.backward()
+            self.robot.nudge(-10)
 
         elif data == bot_left_turn:
-            self.robot.rotate()
+            self.robot.rvel(20)
 
         elif data == bot_right_turn:
-            self.robot.rotate(-10)
+            self.robot.rvel(-20)
 
         elif data == arm_open_claw:
             self.arm.open_claw()
