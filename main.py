@@ -23,17 +23,17 @@ DD_HARDWARE = False
 ARM = False
 
 # consts
-bot_stop = b'\x09' # 9 not 99
-bot_forward = b'\x01' # 1
-bot_backward = b'\x02' # 2
-bot_left_turn = b'\x03' # 3
-bot_right_turn = b'\x04' # 4
+bot_stop = 99 # b'\x09' # 9 not 99
+bot_forward = 1 # b'\x01' # 1
+bot_backward = 2 # b'\x02' # 2
+bot_left_turn = 3 # b'\x03' # 3
+bot_right_turn = 4 # b'\x04' # 4
 
-arm_open_claw = b'\x05' # 5
-arm_close_claw = b'\x06' # 6
+arm_open_claw = 5 # b'\x05' # 5
+arm_close_claw = 6 # b'\x06' # 6
 
-arm_waiting_pos = b'\x07' # 7
-arm_get_pos = b'\x08' # 8
+arm_waiting_pos = 7 # b'\x07' # 7
+arm_get_pos = 8 # b'\x08' # 8
 
 class Matlab:
     def __init__(self):
@@ -92,9 +92,9 @@ class Matlab:
                     print('waiting for data')
 
                 else:
-                    data = incoming # int(incoming, 16)
+                    data = incoming[0] # int(incoming, 16)
                     if LOGGING:
-                        print(f'READING = {incoming} from {self.port}')
+                        print(f'READING: {incoming} = {data} from {self.port}')
                     self.parse_data(data)
 
                 self.serDD.flushInput()
@@ -106,25 +106,14 @@ class Matlab:
 
     def demo(self):
         if ARM:
-            demo_list = [b'\x01',
-                         b'\x02',
-                         b'\x03',
-                         b'\x04',
-                         b'\x05',
-                         b'\x06',
-                         b'\x07',
-                         b'\x08']
+            demo_list = 8
         else:
-            demo_list = [b'\x01',
-                         b'\x02',
-                         b'\x03',
-                         b'\x04']
+            demo_list = 4
 
-        demo_len = len(demo_list)
-        for n in range(demo_len):
-            self.parse_data(demo_list[n])
+        for n in range(demo_list):
+            self.parse_data(demo_list-1)
             sleep(2)
-            self.parse_data(9)
+            self.parse_data(99)
 
     # parses all data from
     def parse_data(self, data):
