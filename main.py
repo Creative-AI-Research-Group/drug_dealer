@@ -19,8 +19,8 @@ from modules.arm import Arm
 
 # hardware abd logging
 LOGGING = True
-DD_HARDWARE = False
-ARM = False
+DD_HARDWARE = True
+ARM = True
 
 # consts
 bot_stop = 99  # b'\x09' # 9 not 99
@@ -160,5 +160,5 @@ class Matlab:
 
 if __name__ == '__main__':
     dd_bot = Matlab()
-    dd_bot.demo()
-    # dd_bot.read()
+    # dd_bot.demo()
+    dd_bot.read()
