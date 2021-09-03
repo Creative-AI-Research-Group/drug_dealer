@@ -111,7 +111,7 @@ class Matlab:
             demo_list = 4
 
         for n in range(demo_list):
-            self.parse_data(demo_list-1)
+            self.parse_data(demo_list+1)
             sleep(2)
             self.parse_data(99)
 
