@@ -148,7 +148,7 @@ class Matlab:
         #     self.send_rx()
 
     def send_rx(self):
-        msg_hx = hex(999)
+        msg_hx = b'\x09'
         print(f'sending hex message: {msg_hx} to {self.serDD.port}')
         self.serDD.write(msg_hx)
 
