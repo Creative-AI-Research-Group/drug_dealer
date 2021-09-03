@@ -23,17 +23,17 @@ DD_HARDWARE = False
 ARM = False
 
 # consts
-bot_stop = 99 # b'\x09' # 9 not 99
-bot_forward = 1 # b'\x01' # 1
-bot_backward = 2 # b'\x02' # 2
-bot_left_turn = 3 # b'\x03' # 3
-bot_right_turn = 4 # b'\x04' # 4
+bot_stop = 99  # b'\x09' # 9 not 99
+bot_forward = 1  # b'\x01' # 1
+bot_backward = 2  # b'\x02' # 2
+bot_left_turn = 3  # b'\x03' # 3
+bot_right_turn = 4  # b'\x04' # 4
 
-arm_open_claw = 5 # b'\x05' # 5
-arm_close_claw = 6 # b'\x06' # 6
+arm_open_claw = 5  # b'\x05' # 5
+arm_close_claw = 6  # b'\x06' # 6
 
-arm_waiting_pos = 7 # b'\x07' # 7
-arm_get_pos = 8 # b'\x08' # 8
+arm_waiting_pos = 7  # b'\x07' # 7
+arm_get_pos = 8 #  b'\x08' # 8
 
 class Matlab:
     def __init__(self):
