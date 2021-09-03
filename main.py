@@ -144,8 +144,8 @@ class Matlab:
         elif data == arm_get_pos:
             self.arm.arm_reach_out()
 
-        if DD_HARDWARE:
-            self.send_rx()
+        # if DD_HARDWARE:
+        #     self.send_rx()
 
     def send_rx(self):
         msg_hx = hex(999)
