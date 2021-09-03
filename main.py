@@ -160,5 +160,5 @@ class Matlab:
 
 if __name__ == '__main__':
     dd_bot = Matlab()
-    dd_bot.demo()
-    #dd_bot.read()
+    # dd_bot.demo()
+    dd_bot.read()
