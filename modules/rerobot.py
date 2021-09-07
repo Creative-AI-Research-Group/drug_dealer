@@ -80,7 +80,7 @@ class Robot:
     def step_forward(self, duration=0.5):
         self.nudge(10)
         sleep(duration)
-        self.stop()
+        self.nudge(0)
 
     def step_backward(self, duration=0.5):
         self.nudge(-10)

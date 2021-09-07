@@ -136,6 +136,7 @@ class DD_signal_in:
 
         elif data == arm_open_claw:
             self.arm.open_claw()
+
         elif data == arm_close_claw:
             self.arm.close_claw()
 
@@ -147,10 +148,10 @@ class DD_signal_in:
         # if DD_HARDWARE:
         #     self.send_rx()
 
-    def send_rx(self):
-        msg_hx = b'\x09'
-        print(f'sending hex message: {msg_hx} to {self.serDD.port}')
-        self.serDD.write(msg_hx)
+    # def send_rx(self):
+    #     msg_hx = b'\x09'
+    #     print(f'sending hex message: {msg_hx} to {self.serDD.port}')
+    #     self.serDD.write(msg_hx)
 
     def terminate(self):
         self.robot.terminate()
