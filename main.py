@@ -19,7 +19,7 @@ from modules.arm import Arm
 
 # hardware abd logging
 LOGGING = True
-DD_HARDWARE = False
+DD_HARDWARE = True
 ARM = True
 
 # consts
@@ -67,7 +67,7 @@ class DD_signal_in:
 
         # instantiate and own robot and LSS objects
         self.robot = Robot()
-        self.robot.rotate(20)
+        # self.robot.rotate(20)
         if LOGGING:
             print(f'Robot ready')
 
@@ -123,16 +123,16 @@ class DD_signal_in:
             self.robot.stop()
 
         elif data == bot_forward:
-            self.robot.nudge(10)
+            self.robot.step_forward(1)
 
         elif data == bot_backward:
-            self.robot.nudge(-10)
+            self.robot.step_backward(1)
 
         elif data == bot_left_turn:
-            self.robot.rvel(20)
+            self.robot.step_left(1)
 
         elif data == bot_right_turn:
-            self.robot.rvel(-20)
+            self.robot.step_right(1)
 
         elif data == arm_open_claw:
             self.arm.open_claw()
