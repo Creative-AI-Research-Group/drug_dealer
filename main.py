@@ -159,6 +159,6 @@ class DD_signal_in:
             self.arm.terminate()
 
 if __name__ == '__main__':
-    dd_bot = DD_signal_in()
-    # dd_bot.demo()
+    # dd_bot = DD_signal_in()
+    dd_bot.demo()
     dd_bot.read()
