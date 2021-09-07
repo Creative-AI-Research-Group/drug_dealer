@@ -35,7 +35,7 @@ arm_close_claw = 6  # b'\x06' # 6
 arm_waiting_pos = 7  # b'\x07' # 7
 arm_get_pos = 8 #  b'\x08' # 8
 
-class Matlab:
+class DD_signal_in:
     def __init__(self):
         if DD_HARDWARE:
             # port_name = input('what is the port of your CV hardware? e.g. ttyUSB1')
@@ -159,6 +159,6 @@ class Matlab:
             self.arm.terminate()
 
 if __name__ == '__main__':
-    dd_bot = Matlab()
+    dd_bot = DD_signal_in()
     # dd_bot.demo()
     dd_bot.read()

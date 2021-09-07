@@ -47,14 +47,14 @@ class Robot:
         # 6 - stop lift
         # 15 - Halts both Gripper paddles and Lift
 
-    def gripper_up(self):
+    def gripper_up(self, duration=0.5):
         self.motor.cmd(self.motor.GRIPPER, value=4)
-        sleep(0.5)
+        sleep(duration)
         self.gripper_stop()
 
-    def gripper_down(self):
+    def gripper_down(self, duration=0.5):
         self.motor.cmd(self.motor.GRIPPER, value=5)
-        sleep(0.5)
+        sleep(duration)
         self.gripper_stop()
 
     def gripper_stop(self):
@@ -77,24 +77,24 @@ class Robot:
         self.motor.cmd(self.motor.GRIPPER, value=15)
 
     # useful UI commands
-    def step_forward(self):
+    def step_forward(self, duration=0.5):
         self.nudge(10)
-        sleep(0.5)
+        sleep(duration)
         self.stop()
 
-    def step_backward(self):
+    def step_backward(self, duration=0.5):
         self.nudge(-10)
-        sleep(0.5)
+        sleep(duration)
         self.stop()
 
-    def step_left(self):
+    def step_left(self, duration=0.5):
         self.rvel(20)
-        sleep(0.5)
+        sleep(duration)
         self.stop()
 
-    def step_right(self):
+    def step_right(self, duration=0.5):
         self.rvel(-20)
-        sleep(0.5)
+        sleep(duration)
         self.stop()
 
     # Jetbot shared commands

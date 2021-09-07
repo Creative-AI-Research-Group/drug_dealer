@@ -30,15 +30,15 @@ class Comms:
     ENABLE = 4
     SETA = 5
     SETV = 6
-    MOVE = 8
+    MOVE = 8  # Translation distance to move in mm
     ROTATE = 9
     SETRV = 10
-    VEL = 11
+    VEL = 11  # Move forward (+) or reverse (-) atmillimeters per second
     HEAD = 12
     DHEAD = 13
     CONFIG = 18
     ENCODER = 19
-    RVEL = 21
+    RVEL = 21  # Rotate at ± degrees per second
     SETRA = 23
     SONAR = 28 # 1=enable, 0=disable all the sonar
     STOP = 29
