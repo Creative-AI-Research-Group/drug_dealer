@@ -23,7 +23,7 @@ DD_HARDWARE = True
 ARM = True
 
 # consts
-bot_stop = 99  # b'\x09' # 9 not 99
+bot_stop = 0  # b'\x09' # 9 not 99
 bot_forward = 1  # b'\x01' # 1
 bot_backward = 2  # b'\x02' # 2
 bot_left_turn = 3  # b'\x03' # 3
@@ -128,37 +128,45 @@ class DD_signal_in:
             print(f'DEMO - testing function {movement_list[n]}')
             self.parse_data(n+1)
             sleep(2)
-            self.parse_data(99)
+            self.parse_data(0)
 
     # parses all data from
     def parse_data(self, data):
         print(f'parsing {data}')
 
-        if data == bot_stop:
-            self.robot.stop()
+        try:
+            if data == 0: # bot_stop:
+                self.robot.stop()
 
-        elif data == bot_forward:
-            self.robot.step_forward(1)
+            elif data == 1: # bot_forward:
+                self.robot.step_forward(1)
 
-        elif data == bot_backward:
-            self.robot.step_backward(1)
+            elif data == 2: # bot_backward:
+                self.robot.step_backward(1)
 
-        elif data == bot_left_turn:
-            self.robot.step_left(1)
+            elif data == 3: # bot_left_turn:
+                self.robot.step_left(1)
 
-        elif data == bot_right_turn:
-            self.robot.step_right(1)
+            elif data == 4: # bot_right_turn:
+                self.robot.step_right(1)
 
-        elif data == arm_open_claw:
-            self.arm.open_claw()
+            elif data == 5: # arm_open_claw:
+                self.arm.open_claw()
 
-        elif data == arm_close_claw:
-            self.arm.close_claw()
+            elif data == 6: # arm_close_claw:
+                self.arm.close_claw()
 
-        elif data == arm_waiting_pos:
-            self.arm.wait_ready()
-        elif data == arm_get_pos:
-            self.arm.arm_reach_out()
+            elif data == 7: # arm_waiting_pos:
+                self.arm.wait_ready()
+
+            elif data == 8: # arm_get_pos:
+                self.arm.arm_reach_out()
+
+            else:
+                print("Dummy data")
+
+        except:
+            print('data corrupt')
 
         # if DD_HARDWARE:
         #     self.send_rx()
