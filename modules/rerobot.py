@@ -77,22 +77,22 @@ class Robot:
         self.motor.cmd(self.motor.GRIPPER, value=15)
 
     # useful UI commands
-    def step_forward(self, duration=0.5):
+    def step_forward(self, duration=1):
         self.nudge(10)
         sleep(duration)
         self.nudge(0)
 
-    def step_backward(self, duration=0.5):
+    def step_backward(self, duration=1):
         self.nudge(-10)
         sleep(duration)
         self.stop()
 
-    def step_left(self, duration=0.5):
+    def step_left(self, duration=1):
         self.rvel(20)
         sleep(duration)
         self.stop()
 
-    def step_right(self, duration=0.5):
+    def step_right(self, duration=1):
         self.rvel(-20)
         sleep(duration)
         self.stop()
