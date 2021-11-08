@@ -5,8 +5,6 @@ and assigns relevent info to a variable.
 
 import serial
 import sys
-import atexit
-from threading import Thread
 
 class Comms:
     # Full codes and info:
@@ -81,24 +79,21 @@ class Comms:
                  'ANALOGUE': 0}
 
     def __init__(self):
-        robot_thread = Thread(target=self.open_robot_server)
-        robot_thread.start()
 
-    def open_robot_server(self):
         if sys.platform.startswith('win'):
-            bot_port = 'COM1'
+            port = 'COM1'
         elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
             # this excludes your current terminal "/dev/tty"
-            bot_port = '/dev/ttyUSB0'
+            port = '/dev/ttyUSB0'
         elif sys.platform.startswith('darwin'):
-            bot_port = '/dev/cu.usbserial-FT5ADV3R'
+            port = '/dev/cu.usbserial-FT5ADV3R'
         else:
             raise EnvironmentError('Unsupported platform')
 
         print(f'initialise connection to host\n'
-              f'opens up the serial port as an object called "ser"{bot_port}')
+              f'opens up the serial port as an object called "ser"{port}')
 
-        self.ser = serial.Serial(port=bot_port,
+        self.ser = serial.Serial(port=port,
             baudrate=9600,
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
@@ -106,7 +101,6 @@ class Comms:
             timeout=1
             )
         self.ser.isOpen()
-        atexit.register(self.ser.close)
 
     # writes to server
     def write(self, msg):

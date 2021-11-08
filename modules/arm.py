@@ -15,8 +15,6 @@ import platform
 import numpy as np
 from math import atan2, sqrt, cos, sin, acos, pi
 import time
-from threading import Thread
-import atexit
 
 # Import LSS library
 import modules.lss_core as lss
@@ -25,24 +23,24 @@ import modules.lss_const as lssc
 
 class Arm:
     def __init__(self):
-        # print('init serial comms to LynxMotion board')
-        # print('Init robot arm')
-        #
-        # # Open constants
-        # if platform.system() == 'Windows':
-        #     CST_LSS_Port = "COM3"
-        # elif platform.system() == 'Linux':
-        #     CST_LSS_Port = "/dev/ttyUSB1"
-        # else:
-        #     CST_LSS_Port = "/dev/cu.usbserial-AE4O4BY3"  # Mac
-        #
-        # CST_LSS_Baud = lssc.LSS_DefaultBaud
+        print('init serial comms to LynxMotion board')
+        print('Init robot arm')
+
+        # Open constants
+        if platform.system() == 'Windows':
+            CST_LSS_Port = "COM3"
+        elif platform.system() == 'Linux':
+            CST_LSS_Port = "/dev/ttyUSB1"
+        else:
+            CST_LSS_Port = "/dev/cu.usbserial-AE4O4BY3" # Mac
+
+        CST_LSS_Baud = lssc.LSS_DefaultBaud
         self.CST_ANGLE_MIN = -90
         self.CST_ANGLE_MAX = 90
-        #
-        # # Create and open a serial port
-        # lss.initBus(CST_LSS_Port, CST_LSS_Baud)
-        # print('port opened')
+
+        # Create and open a serial port
+        lss.initBus(CST_LSS_Port, CST_LSS_Baud)
+        print('port opened')
 
         # Set standard positions - ABSOLUTES
         self.sleep_position_abs = [0, -900, 900, 0, 0]  # absolute arm position for hold
@@ -111,41 +109,6 @@ class Arm:
 
         # pen height from end of gripper
         self.pen_height = 2.90  # inch
-
-        robot_thread = Thread(target=self.open_arm_server)
-        robot_thread.start()
-
-
-    def open_arm_server(self):
-        print('init serial comms to LynxMotion board')
-        print('Init robot arm')
-
-        # Open constants
-        if platform.system() == 'Windows':
-            CST_LSS_Port = "COM3"
-        elif platform.system() == 'Linux':
-            CST_LSS_Port = "/dev/ttyUSB1"
-        else:
-            CST_LSS_Port = "/dev/cu.usbserial-AE4O4BY3"  # Mac
-
-        CST_LSS_Baud = lssc.LSS_DefaultBaud
-        # self.CST_ANGLE_MIN = -90
-
-        # Create and open a serial port
-        lss.initBus(CST_LSS_Port, CST_LSS_Baud)
-
-        print(f'initialise connection to host\n'
-              f'opens up the serial port as an object called "ser"{CST_LSS_Port}')
-
-        # self.ser = serial.Serial(port=port,
-        #                          baudrate=9600,
-        #                          parity=serial.PARITY_NONE,
-        #                          stopbits=serial.STOPBITS_ONE,
-        #                          bytesize=serial.EIGHTBITS,
-        #                          timeout=1
-        #                          )
-        # self.ser.isOpen()
-        # atexit.register(self.ser.close)
 
     #### lss shared commands ####
     # resets all joints
