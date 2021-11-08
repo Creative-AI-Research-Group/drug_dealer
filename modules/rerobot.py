@@ -78,12 +78,12 @@ class Robot:
 
     # useful UI commands
     def step_forward(self, duration=1):
-        self.nudge(10)
+        self.move(10)
         sleep(duration)
-        self.nudge(0)
+        self.stop()
 
     def step_backward(self, duration=1):
-        self.nudge(-10)
+        self.move(-10)
         sleep(duration)
         self.stop()
 
