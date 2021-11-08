@@ -92,7 +92,7 @@ class DD_signal_in:
                                        timeout=1
                                        )
             self.serDD.isOpen()
-            # atexit.register(self.terminate())
+            atexit.register(self.terminate())
 
     # read from server buffer
     def read(self, inputQueue):
@@ -102,16 +102,16 @@ class DD_signal_in:
             # buffer.
             # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
             # function `inWaiting()` below!
-            if self.serDD.inWaiting() > 0:
+            # if self.serDD.inWaiting() > 0:
                 # read the bytes and convert from binary array to ASCII
-                incoming = self.serDD.read(255) #self.serDD.inWaiting())#.decode('ascii')
-                print('incoming data =  ', incoming)
-                # print the incoming string without putting a new-line
-                # ('\n') automatically after every print()
+            incoming = self.serDD.read(255) #self.serDD.inWaiting())#.decode('ascii')
+            print('incoming data =  ', incoming)
+            # print the incoming string without putting a new-line
+            # ('\n') automatically after every print()
 
-                # incoming = incoming[0]
-                print('incoming data =  ', incoming)
-                inputQueue.put(incoming)
+            # incoming = incoming[0]
+            print('incoming data =  ', incoming)
+            inputQueue.put(incoming)
 
             sleep(0.01)
 
@@ -128,12 +128,12 @@ class DD_signal_in:
             inputThread = threading.Thread(target=self.read, args=(inputQueue,), daemon=True)
             inputThread.start()
 
-            while (True):
-                if (inputQueue.qsize() > 0):
+            while self.serDD.isOpen():
+                if inputQueue.qsize() > 0:
                     input_str = inputQueue.get()
                     print("input_str = {}".format(input_str))
 
-                    if (input_str == EXIT_COMMAND):
+                    if input_str == EXIT_COMMAND:
                         print("Exiting serial terminal.")
                         break
 

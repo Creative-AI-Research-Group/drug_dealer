@@ -160,9 +160,10 @@ class Comms:
                 self.sips_dict['ANALOGUE'] = decode_array[length_string - 5: length_string - 4]
 
     # closes down server robot and serial port
-    def close_sequence(self, terminate_code):
-        terminate_code = bytearray(terminate_code)
-        self.ser.write(terminate_code)
+    def close_sequence(self):
+        # terminate_code = bytearray(terminate_code)
+        self.ser.write(self.STOP_COMMAND)
+        self.ser.write(self.CLOSE_DOWN_CODE)
         print ('Robot closing down')
         self.ser.close()
         print("All closed - see ya!!")
