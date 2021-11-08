@@ -61,7 +61,7 @@ class DD_signal_in:
             self.arm = Arm()
 
             # move to ackowledge connection
-            self.arm.draw_ready()
+            self.arm.arm_reach_out()
 
             if LOGGING:
                 print(f'arm ready')
@@ -166,10 +166,10 @@ class DD_signal_in:
                 self.robot.stop()
 
             elif data == 1: # bot_forward:
-                self.robot.step_forward()
+                self.robot.step_forward(speed=20)
 
             elif data == 2: # bot_backward:
-                self.robot.step_backward()
+                self.robot.step_backward(speed=20)
 
             elif data == 3: # bot_left_turn:
                 self.robot.step_left()
