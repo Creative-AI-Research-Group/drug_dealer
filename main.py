@@ -1,12 +1,12 @@
 #
 # Drug Dealer Bot
-# 10 August 2021
+# 08 Nov 2021
 #
 # Craig Vear - cvear@dmu.ac.uk
 #
 
 """server script for receiving robot movement instructions
-from Dmitriy's C++ CV script (localhost)"""
+from Dmitriy's C++ CV script"""
 
 # import python modules
 import sys
@@ -61,7 +61,8 @@ class DD_signal_in:
             self.arm = Arm()
 
             # move to ackowledge connection
-            self.arm.wait_ready()
+            self.arm.draw_ready()
+
             if LOGGING:
                 print(f'arm ready')
 
@@ -100,8 +101,6 @@ class DD_signal_in:
 
             # Check if incoming bytes are waiting to be read from the serial input
             # buffer.
-            # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
-            # function `inWaiting()` below!
             if self.serDD.inWaiting() > 0:
                 # read the bytes and convert from binary array to ASCII
                 incoming = self.serDD.read(self.serDD.inWaiting()) #.decode('ascii')
@@ -137,56 +136,12 @@ class DD_signal_in:
                         print("Exiting serial terminal.")
                         break
 
-                    # Insert your code here to do whatever you want with the input_str.
-
-                    # The rest of your program goes here.
-                    # data = input_str[0]  # int(incoming, 16)
                     if LOGGING:
                         print(f'READING: {input_str} from {self.portDD}')
                     self.parse_data(input_str)
 
                     # sleep(0.01)
             print("End.")
-        # if DD_HARDWARE:
-        #     while self.serDD.isOpen():
-        #
-        #         # Check if incoming bytes are waiting to be read from the serial input
-        #         # buffer.
-        #         # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
-        #         # function `inWaiting()` below!
-        #         if self.serDD.inWaiting() > 0:
-        #             # read the bytes and convert from binary array to ASCII
-        #             incoming = self.serDD.read(255)
-        #             # print the incoming string without putting a new-line
-        #             # ('\n') automatically after every print()
-        #             print(incoming, end='')
-
-                    # Put the rest of your code you want here
-                # else:
-                #     data = incoming[0]  # int(incoming, 16)
-                #     if LOGGING:
-                #         print(f'READING: {incoming} = {data} from {self.portDD}')
-                #     self.parse_data(data)
-
-                # self.serDD.flushInput()
-
-                # Optional, but recommended: sleep 10 ms (0.01 sec) once per loop to let
-                # other threads on your PC run during this time.
-
-                # sleep(0.01)
-
-
-
-                # # Read incoming SIP
-                # incoming = self.serDD.read() # (255)
-                #
-                # if incoming == b'':
-                #     print('waiting for data')
-
-
-
-        # else:
-        #     self.demo()
 
         self.terminate()
 
@@ -211,16 +166,16 @@ class DD_signal_in:
                 self.robot.stop()
 
             elif data == 1: # bot_forward:
-                self.robot.step_forward()
+                self.robot.step_forward(1)
 
             elif data == 2: # bot_backward:
-                self.robot.step_backward()
+                self.robot.step_backward(1)
 
             elif data == 3: # bot_left_turn:
-                self.robot.step_left()
+                self.robot.step_left(1)
 
             elif data == 4: # bot_right_turn:
-                self.robot.step_right()
+                self.robot.step_right(1)
 
             elif data == 5: # arm_open_claw:
                 self.arm.open_claw()
