@@ -5,6 +5,7 @@ and assigns relevent info to a variable.
 
 import serial
 import sys
+import atexit
 
 class Comms:
     # Full codes and info:
@@ -80,7 +81,6 @@ class Comms:
 
     def __init__(self):
 
-
         if sys.platform.startswith('win'):
             port = 'COM1'
         elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
@@ -102,6 +102,7 @@ class Comms:
             timeout=1
             )
         self.ser.isOpen()
+        atexit.register(self.ser.close)
 
     # writes to server
     def write(self, msg):

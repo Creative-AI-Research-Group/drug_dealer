@@ -12,6 +12,7 @@ from Dmitriy's C++ CV script (localhost)"""
 import sys
 import serial
 from time import sleep
+import atexit
 
 # import project modules
 from modules.rerobot import Robot
@@ -47,10 +48,10 @@ movement_list = ["bot_forward",
 class DD_signal_in:
     def __init__(self):
         # instantiate and own robot and LSS objects
-        self.robot = Robot()
+        # self.robot = Robot()
 
         # move to ackowledge connection
-        self.robot.rotate(20)
+        # self.robot.rotate(20)
         if LOGGING:
             print(f'Robot ready')
 
@@ -89,12 +90,12 @@ class DD_signal_in:
                                        timeout=1
                                        )
             self.serDD.isOpen()
-
+            atexit.register(self.serDD.close)
 
     # listen to port
     # read from server buffer
     def read(self):
-        self.serDD.flushInput()
+        # self.serDD.flushInput()
         if LOGGING:
             print('ready to read')
 
@@ -105,9 +106,9 @@ class DD_signal_in:
                 # buffer.
                 # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
                 # function `inWaiting()` below!
-                if (self.serDD.inWaiting() > 0):
+                if self.serDD.inWaiting() > 0:
                     # read the bytes and convert from binary array to ASCII
-                    incoming = self.serDD.read()
+                    incoming = self.serDD.read(self.serDD.inWaiting())
                     # print the incoming string without putting a new-line
                     # ('\n') automatically after every print()
                     print(incoming, end='')
