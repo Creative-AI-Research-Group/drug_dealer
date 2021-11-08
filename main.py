@@ -50,19 +50,19 @@ class DD_signal_in:
             # else:
             #     raise EnvironmentError('Unsupported platform')
 
-            self.port = '/dev/ttyUSB2'
+            self.portDD = '/dev/ttyUSB2'
 
             if LOGGING:
                 print(f'initialise connection to host\n'
-                      f'opens up the serial port as an object called "ser"{self.port}')
+                      f'opens up the serial port as an object called "ser"{self.portDD}')
 
-            self.serDD = serial.Serial(port=self.port,
-                                     baudrate=9600,
-                                     parity=serial.PARITY_NONE,
-                                     stopbits=serial.STOPBITS_ONE,
-                                     bytesize=serial.EIGHTBITS,
-                                     timeout=1
-                                     )
+            self.serDD = serial.Serial(port=self.portDD,
+                                       baudrate=9600,
+                                       parity=serial.PARITY_NONE,
+                                       stopbits=serial.STOPBITS_ONE,
+                                       bytesize=serial.EIGHTBITS,
+                                       timeout=1
+                                       )
             self.serDD.isOpen()
 
         # instantiate and own robot and LSS objects
@@ -94,7 +94,7 @@ class DD_signal_in:
                 else:
                     data = incoming[0] # int(incoming, 16)
                     if LOGGING:
-                        print(f'READING: {incoming} = {data} from {self.port}')
+                        print(f'READING: {incoming} = {data} from {self.portDD}')
                     self.parse_data(data)
 
                 self.serDD.flushInput()
@@ -161,5 +161,5 @@ class DD_signal_in:
 
 if __name__ == '__main__':
     dd_bot = DD_signal_in()
-    dd_bot.demo()
-    # dd_bot.read()
+    # dd_bot.demo()
+    dd_bot.read()
