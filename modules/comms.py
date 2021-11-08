@@ -6,6 +6,7 @@ and assigns relevent info to a variable.
 import serial
 import sys
 import atexit
+from threading import Thread
 
 class Comms:
     # Full codes and info:
@@ -80,7 +81,10 @@ class Comms:
                  'ANALOGUE': 0}
 
     def __init__(self):
+        robot_thread = Thread(target=self.open_robot_server)
+        robot_thread.start()
 
+    def open_robot_server(self):
         if sys.platform.startswith('win'):
             port = 'COM1'
         elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):

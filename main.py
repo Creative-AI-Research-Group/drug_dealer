@@ -48,10 +48,10 @@ movement_list = ["bot_forward",
 class DD_signal_in:
     def __init__(self):
         # instantiate and own robot and LSS objects
-        # self.robot = Robot()
+        self.robot = Robot()
 
         # move to ackowledge connection
-        # self.robot.rotate(20)
+        self.robot.rotate(20)
         if LOGGING:
             print(f'Robot ready')
 
