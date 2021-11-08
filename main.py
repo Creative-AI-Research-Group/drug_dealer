@@ -95,7 +95,7 @@ class DD_signal_in:
             atexit.register(self.serDD.close)
 
     # read from server buffer
-    def read(self):
+    def read(self, inputQueue):
         while self.serDD.isOpen():
 
             # Check if incoming bytes are waiting to be read from the serial input
@@ -251,5 +251,5 @@ class DD_signal_in:
 
 if __name__ == '__main__':
     dd_bot = DD_signal_in()
-    dd_bot.demo()
+    # dd_bot.demo()
     dd_bot.main()
