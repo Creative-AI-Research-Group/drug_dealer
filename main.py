@@ -35,8 +35,33 @@ arm_close_claw = 6  # b'\x06' # 6
 arm_waiting_pos = 7  # b'\x07' # 7
 arm_get_pos = 8 #  b'\x08' # 8
 
+movement_list = ["bot_forward",
+                 "bot_backward",
+                 "bot_left_turn",
+                 "bot_right_turn",
+                 "arm_open_claw",
+                 "arm_close_claw",
+                 "arm_waiting_pos",
+                 "arm_get_pos"]
+
 class DD_signal_in:
     def __init__(self):
+        # instantiate and own robot and LSS objects
+        self.robot = Robot()
+
+        # move to ackowledge connection
+        self.robot.rotate(20)
+        if LOGGING:
+            print(f'Robot ready')
+
+        if ARM:
+            self.arm = Arm()
+
+            # move to ackowledge connection
+            self.arm.wait_ready()
+            if LOGGING:
+                print(f'arm ready')
+
         if DD_HARDWARE:
             # port_name = input('what is the port of your CV hardware? e.g. ttyUSB1')
 
@@ -54,7 +79,7 @@ class DD_signal_in:
 
             if LOGGING:
                 print(f'initialise connection to host\n'
-                      f'opens up the serial port as an object called "ser"{self.portDD}')
+                      f'opens up the serial port to DD hardware as an object called "ser"{self.portDD}')
 
             self.serDD = serial.Serial(port=self.portDD,
                                        baudrate=9600,
@@ -65,17 +90,6 @@ class DD_signal_in:
                                        )
             self.serDD.isOpen()
 
-        # instantiate and own robot and LSS objects
-        self.robot = Robot()
-        # self.robot.rotate(20)
-        if LOGGING:
-            print(f'Robot ready')
-
-        if ARM:
-            self.arm = Arm()
-            self.arm.wait_ready()
-            if LOGGING:
-                print(f'arm ready')
 
     # listen to port
     # read from server buffer
@@ -111,6 +125,7 @@ class DD_signal_in:
             demo_list = 4
 
         for n in range(demo_list):
+            print(f'DEMO - testing function {movement_list[n]}')
             self.parse_data(n+1)
             sleep(2)
             self.parse_data(99)
@@ -161,5 +176,5 @@ class DD_signal_in:
 
 if __name__ == '__main__':
     dd_bot = DD_signal_in()
-    # dd_bot.demo()
+    dd_bot.demo()
     dd_bot.read()
