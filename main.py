@@ -92,7 +92,7 @@ class DD_signal_in:
                                        timeout=1
                                        )
             self.serDD.isOpen()
-            atexit.register(self.terminate())
+            # atexit.register(self.terminate())
 
     # read from server buffer
     def read(self, inputQueue):
