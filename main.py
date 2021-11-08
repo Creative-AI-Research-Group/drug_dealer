@@ -113,6 +113,8 @@ class DD_signal_in:
                 print('incoming data =  ', incoming)
                 inputQueue.put(incoming)
 
+            sleep(0.01)
+
     # listen to port
     def main(self):
         # self.serDD.flushInput()
@@ -143,7 +145,7 @@ class DD_signal_in:
                         print(f'READING: {input_str} from {self.portDD}')
                     self.parse_data(input_str)
 
-                    sleep(0.01)
+                    # sleep(0.01)
             print("End.")
         # if DD_HARDWARE:
         #     while self.serDD.isOpen():
