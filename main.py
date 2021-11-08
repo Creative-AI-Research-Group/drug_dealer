@@ -109,7 +109,7 @@ class DD_signal_in:
                 # print the incoming string without putting a new-line
                 # ('\n') automatically after every print()
 
-                # incoming = incoming[0]
+                incoming = incoming[0]
                 print('incoming data =  ', incoming)
                 inputQueue.put(incoming)
 

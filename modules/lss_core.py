@@ -19,6 +19,8 @@ import modules.lss_const as lssc
 ### Class functions
 def initBus(portName, portBaud):
     LSS.bus = serial.Serial(portName, portBaud)
+    print(f'initialise connection to host\n'
+          f'opens up the serial port as an object called "ser"{portName}')
     LSS.bus.timeout = 0.1
 
 def closeBus():
