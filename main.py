@@ -105,6 +105,7 @@ class DD_signal_in:
             if self.serDD.inWaiting() > 0:
                 # read the bytes and convert from binary array to ASCII
                 incoming = self.serDD.read(255)
+                print('incoming data =  ', incoming)
                 # print the incoming string without putting a new-line
                 # ('\n') automatically after every print()
 
