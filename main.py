@@ -107,7 +107,9 @@ class DD_signal_in:
                 incoming = self.serDD.read(255)
                 # print the incoming string without putting a new-line
                 # ('\n') automatically after every print()
-                print(incoming, end='')
+
+                incoming = incoming[0]
+                print('incoming data =  ', incoming)
                 inputQueue.put(incoming)
 
     # listen to port
@@ -135,10 +137,10 @@ class DD_signal_in:
                     # Insert your code here to do whatever you want with the input_str.
 
                     # The rest of your program goes here.
-                    data = input_str[0]  # int(incoming, 16)
+                    # data = input_str[0]  # int(incoming, 16)
                     if LOGGING:
-                        print(f'READING: {input_str} = {data} from {self.portDD}')
-                    self.parse_data(data)
+                        print(f'READING: {input_str} from {self.portDD}')
+                    self.parse_data(input_str)
 
                     sleep(0.01)
             print("End.")
