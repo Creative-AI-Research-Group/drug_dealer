@@ -13,6 +13,8 @@ import sys
 import serial
 from time import sleep
 import atexit
+import threading
+import queue
 
 # import project modules
 from modules.rerobot import Robot
@@ -92,40 +94,81 @@ class DD_signal_in:
             self.serDD.isOpen()
             atexit.register(self.serDD.close)
 
-    # listen to port
     # read from server buffer
     def read(self):
+        while self.serDD.isOpen():
+
+            # Check if incoming bytes are waiting to be read from the serial input
+            # buffer.
+            # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
+            # function `inWaiting()` below!
+            if self.serDD.inWaiting() > 0:
+                # read the bytes and convert from binary array to ASCII
+                incoming = self.serDD.read(255)
+                # print the incoming string without putting a new-line
+                # ('\n') automatically after every print()
+                print(incoming, end='')
+                inputQueue.put(incoming)
+
+    # listen to port
+    def main(self):
         # self.serDD.flushInput()
         if LOGGING:
             print('ready to read')
 
         if DD_HARDWARE:
-            while self.serDD.isOpen():
+            EXIT_COMMAND = "exit"
+            inputQueue = queue.Queue()
 
-                # Check if incoming bytes are waiting to be read from the serial input
-                # buffer.
-                # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
-                # function `inWaiting()` below!
-                if self.serDD.inWaiting() > 0:
-                    # read the bytes and convert from binary array to ASCII
-                    incoming = self.serDD.read(self.serDD.inWaiting())
-                    # print the incoming string without putting a new-line
-                    # ('\n') automatically after every print()
-                    print(incoming, end='')
+            inputThread = threading.Thread(target=self.read, args=(inputQueue,), daemon=True)
+            inputThread.start()
+
+            while (True):
+                if (inputQueue.qsize() > 0):
+                    input_str = inputQueue.get()
+                    print("input_str = {}".format(input_str))
+
+                    if (input_str == EXIT_COMMAND):
+                        print("Exiting serial terminal.")
+                        break
+
+                    # Insert your code here to do whatever you want with the input_str.
+
+                    # The rest of your program goes here.
+                    data = input_str[0]  # int(incoming, 16)
+                    if LOGGING:
+                        print(f'READING: {input_str} = {data} from {self.portDD}')
+                    self.parse_data(data)
+
+                    sleep(0.01)
+            print("End.")
+        # if DD_HARDWARE:
+        #     while self.serDD.isOpen():
+        #
+        #         # Check if incoming bytes are waiting to be read from the serial input
+        #         # buffer.
+        #         # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
+        #         # function `inWaiting()` below!
+        #         if self.serDD.inWaiting() > 0:
+        #             # read the bytes and convert from binary array to ASCII
+        #             incoming = self.serDD.read(255)
+        #             # print the incoming string without putting a new-line
+        #             # ('\n') automatically after every print()
+        #             print(incoming, end='')
 
                     # Put the rest of your code you want here
                 # else:
-                    data = incoming[0]  # int(incoming, 16)
-                    if LOGGING:
-                        print(f'READING: {incoming} = {data} from {self.portDD}')
-                    self.parse_data(data)
+                #     data = incoming[0]  # int(incoming, 16)
+                #     if LOGGING:
+                #         print(f'READING: {incoming} = {data} from {self.portDD}')
+                #     self.parse_data(data)
 
                 # self.serDD.flushInput()
 
                 # Optional, but recommended: sleep 10 ms (0.01 sec) once per loop to let
                 # other threads on your PC run during this time.
 
-                sleep(0.01)
+                # sleep(0.01)
 
 
 
@@ -209,4 +252,4 @@ class DD_signal_in:
 if __name__ == '__main__':
     dd_bot = DD_signal_in()
     dd_bot.demo()
-    dd_bot.read()
+    dd_bot.main()
