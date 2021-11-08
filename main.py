@@ -100,19 +100,41 @@ class DD_signal_in:
 
         if DD_HARDWARE:
             while self.serDD.isOpen():
-                # Read incoming SIP
-                incoming = self.serDD.read() # (255)
 
-                if incoming == b'':
-                    print('waiting for data')
+                # Check if incoming bytes are waiting to be read from the serial input
+                # buffer.
+                # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
+                # function `inWaiting()` below!
+                if (self.serDD.inWaiting() > 0):
+                    # read the bytes and convert from binary array to ASCII
+                    incoming = self.serDD.read(self.serDD.inWaiting())
+                    # print the incoming string without putting a new-line
+                    # ('\n') automatically after every print()
+                    print(incoming, end='')
 
-                else:
-                    data = incoming[0] # int(incoming, 16)
+                    # Put the rest of your code you want here
+                # else:
+                    data = incoming[0]  # int(incoming, 16)
                     if LOGGING:
                         print(f'READING: {incoming} = {data} from {self.portDD}')
                     self.parse_data(data)
 
                 # self.serDD.flushInput()
+
+                # Optional, but recommended: sleep 10 ms (0.01 sec) once per loop to let
+                # other threads on your PC run during this time.
+
+                sleep(0.01)
+
+
+
+                # # Read incoming SIP
+                # incoming = self.serDD.read() # (255)
+                #
+                # if incoming == b'':
+                #     print('waiting for data')
+
+
 
         # else:
         #     self.demo()
