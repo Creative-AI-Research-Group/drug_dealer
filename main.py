@@ -94,13 +94,14 @@ class DD_signal_in:
     # listen to port
     # read from server buffer
     def read(self):
+        self.serDD.flushInput()
         if LOGGING:
             print('ready to read')
 
         if DD_HARDWARE:
             while self.serDD.isOpen():
                 # Read incoming SIP
-                incoming = self.serDD.read(255)
+                incoming = self.serDD.read() # (255)
 
                 if incoming == b'':
                     print('waiting for data')
@@ -111,10 +112,10 @@ class DD_signal_in:
                         print(f'READING: {incoming} = {data} from {self.portDD}')
                     self.parse_data(data)
 
-                self.serDD.flushInput()
+                # self.serDD.flushInput()
 
-        else:
-            self.demo()
+        # else:
+        #     self.demo()
 
         self.terminate()
 
