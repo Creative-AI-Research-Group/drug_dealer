@@ -86,19 +86,19 @@ class Comms:
 
     def open_robot_server(self):
         if sys.platform.startswith('win'):
-            port = 'COM1'
+            bot_port = 'COM1'
         elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
             # this excludes your current terminal "/dev/tty"
-            port = '/dev/ttyUSB0'
+            bot_port = '/dev/ttyUSB0'
         elif sys.platform.startswith('darwin'):
-            port = '/dev/cu.usbserial-FT5ADV3R'
+            bot_port = '/dev/cu.usbserial-FT5ADV3R'
         else:
             raise EnvironmentError('Unsupported platform')
 
         print(f'initialise connection to host\n'
-              f'opens up the serial port as an object called "ser"{port}')
+              f'opens up the serial port as an object called "ser"{bot_port}')
 
-        self.ser = serial.Serial(port=port,
+        self.ser = serial.Serial(port=bot_port,
             baudrate=9600,
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
