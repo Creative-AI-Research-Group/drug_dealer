@@ -139,16 +139,16 @@ class DD_signal_in:
                 self.robot.stop()
 
             elif data == 1: # bot_forward:
-                self.robot.step_forward(1)
+                self.robot.step_forward()
 
             elif data == 2: # bot_backward:
-                self.robot.step_backward(1)
+                self.robot.step_backward()
 
             elif data == 3: # bot_left_turn:
-                self.robot.step_left(1)
+                self.robot.step_left()
 
             elif data == 4: # bot_right_turn:
-                self.robot.step_right(1)
+                self.robot.step_right()
 
             elif data == 5: # arm_open_claw:
                 self.arm.open_claw()
