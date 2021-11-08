@@ -102,18 +102,18 @@ class DD_signal_in:
             # buffer.
             # NB: for PySerial v3.0 or later, use property `in_waiting` instead of
             # function `inWaiting()` below!
-            # if self.serDD.inWaiting() > 0:
+            if self.serDD.inWaiting() > 0:
                 # read the bytes and convert from binary array to ASCII
-            incoming = self.serDD.read(255) #self.serDD.inWaiting())#.decode('ascii')
-            print('incoming data =  ', incoming)
-            # print the incoming string without putting a new-line
-            # ('\n') automatically after every print()
+                incoming = self.serDD.read(self.serDD.inWaiting()) #.decode('ascii')
+                print('incoming data =  ', incoming)
+                # print the incoming string without putting a new-line
+                # ('\n') automatically after every print()
 
-            # incoming = incoming[0]
-            print('incoming data =  ', incoming)
-            inputQueue.put(incoming)
+                # incoming = incoming[0]
+                print('incoming data =  ', incoming)
+                inputQueue.put(incoming)
 
-            sleep(0.01)
+                sleep(0.01)
 
     # listen to port
     def main(self):
