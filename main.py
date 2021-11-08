@@ -92,7 +92,7 @@ class DD_signal_in:
                                        timeout=1
                                        )
             self.serDD.isOpen()
-            atexit.register(self.serDD.close)
+            atexit.register(self.terminate())
 
     # read from server buffer
     def read(self, inputQueue):
@@ -248,6 +248,8 @@ class DD_signal_in:
 
         if ARM:
             self.arm.terminate()
+
+        self.serDD.close()
 
 if __name__ == '__main__':
     dd_bot = DD_signal_in()

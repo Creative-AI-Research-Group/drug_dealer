@@ -5,6 +5,7 @@ and assigns relevent info to a variable.
 
 import serial
 import sys
+import atexit
 
 class Comms:
     # Full codes and info:
@@ -101,6 +102,7 @@ class Comms:
             timeout=1
             )
         self.ser.isOpen()
+        atexit.register(self.close_sequence)
 
     # writes to server
     def write(self, msg):
