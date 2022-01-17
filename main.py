@@ -213,5 +213,5 @@ class DD_signal_in:
 
 if __name__ == '__main__':
     dd_bot = DD_signal_in()
-    # dd_bot.demo()
+    dd_bot.demo()
     dd_bot.main()
