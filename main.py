@@ -103,7 +103,7 @@ class DD_signal_in:
             # buffer.
             if self.serDD.inWaiting() > 0:
                 # read the bytes and convert from binary array to ASCII
-                incoming = self.serDD.read(self.serDD.inWaiting()) #.decode('ascii')
+                incoming = self.serDD.read() #(self.serDD.inWaiting()) #.decode('ascii')
                 print('incoming data (hex) =  ', incoming)
                 # print the incoming string without putting a new-line
                 # ('\n') automatically after every print()
