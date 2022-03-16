@@ -27,3 +27,5 @@ serBot.isOpen()
 while serDD:
     incoming = serDD.read()
     print (f'DD         {incoming}')
+    serBot.write(incoming)
+    print(f'sent {incoming} to Bot')
