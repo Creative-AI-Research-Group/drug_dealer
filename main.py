@@ -101,13 +101,14 @@ class DD_signal_in:
 
             # Check if incoming bytes are waiting to be read from the serial input
             # buffer.
-            if self.serDD.inWaiting() > 0:
-                # read the bytes and convert from binary array to ASCII
-                incoming = self.serDD.read() #(self.serDD.inWaiting()) #.decode('ascii')
-                print('incoming data (hex) =  ', incoming)
-                # print the incoming string without putting a new-line
-                # ('\n') automatically after every print()
+            # if self.serDD.inWaiting() > 0:
+            # read the bytes and convert from binary array to ASCII
+            incoming = self.serDD.read() #(self.serDD.inWaiting()) #.decode('ascii')
+            print('incoming data (hex) =  ', incoming)
+            # print the incoming string without putting a new-line
+            # ('\n') automatically after every print()
 
+            if len(incoming) >0:
                 incoming = incoming[0]
                 print('incoming data (ASCII) =  ', incoming)
                 inputQueue.put(incoming)
